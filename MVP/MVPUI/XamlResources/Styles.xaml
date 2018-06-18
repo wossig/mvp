@@ -15,9 +15,15 @@
 	<Color x:Key="SecondaryTextColor">#4B4B4B</Color>
 
 	<OnPlatform x:Key="BackgroundColor" x:TypeArguments="Color">
-		<On Platform="iOS" Value="#FFFFFF" />
-		<On Platform="Android" Value="#F5F5F5" />
-		<On Platform="UWP" Value="#F5F5F5" />
+		<On Platform="iOS">
+			<Color>#FFFFFF</Color>
+		</On>
+		<On Platform="Android">
+			<Color>#F5F5F5</Color>
+		</On>
+		<On Platform="UWP">
+			<Color>#F5F5F5</Color>
+		</On>
 	</OnPlatform>
 	<OnPlatform x:Key="NormalLabelFontSize" x:TypeArguments="x:Double">
 		<On Platform="iOS" Value="13" />

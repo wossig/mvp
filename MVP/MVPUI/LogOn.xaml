@@ -16,19 +16,22 @@
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
 
-            <Image 
+			<Image 
                 x:Name="logo" 
                 Opacity="0" 
                 Margin="50" 
                 HorizontalOptions="Center" 
                 VerticalOptions="CenterAndExpand">
-                <Image.Source>
-                    <OnPlatform x:TypeArguments="ImageSource">
-                        <On Platform="iOS" Value="image_mvplogo.png" />
-                        <On Platform="Android" Value="image_mvplogo.png" />
-                        <On Platform="UWP" Value="Assets\image_mvplogo.png" />
-                    </OnPlatform>
-                </Image.Source>
+				<Image.Source>
+					<OnPlatform x:TypeArguments="FileImageSource">
+						<On Platform="iOS, Android">
+							<FileImageSource File="image_mvplogo.png"/>
+						</On>
+						<On Platform="Windows">
+							<FileImageSource File="Assets\image_mvplogo.png"/>
+						</On>
+					</OnPlatform>
+				</Image.Source>
             </Image>
 
             <Label

@@ -40,8 +40,7 @@ namespace Microsoft.Mvpui
 		
         protected async override void OnAppearing()
         {
-            base.OnAppearing();
-
+			base.OnAppearing();
 			MyProfileViewModel.Instance.LoadProfileCommand.Execute(null);
         }
 

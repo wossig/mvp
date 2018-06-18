@@ -14,27 +14,27 @@ using Xamarin.Forms;
 //[assembly: Dependency(typeof(LiveMvpService))]
 namespace Microsoft.Mvp.Helpers
 {
-    public class LiveMvpService : IDisposable, IMvpService
-    {
-        public enum HttpMethod
-        {
-            Put,
-            Delete,
-            Get,
-            Post
-        }
+	public class LiveMvpService : IDisposable, IMvpService
+	{
+		public enum HttpMethod
+		{
+			Put,
+			Delete,
+			Get,
+			Post
+		}
 
-        /// <summary>
-        /// Handle Add/Del/Modify of Contributions.
-        /// </summary>
-        /// <param name="model">Instance of ContributionModel</param>
-        /// <param name="httpMethod">Put/Post/Delete</param>
-        /// <returns></returns>
-        async Task<string> DoWork(string url, Object model, HttpMethod httpMethod, string token, bool isImage, bool isRefreshedToken, bool isAddOrUpdateContribution = false)
-        {
+		/// <summary>
+		/// Handle Add/Del/Modify of Contributions.
+		/// </summary>
+		/// <param name="model">Instance of ContributionModel</param>
+		/// <param name="httpMethod">Put/Post/Delete</param>
+		/// <returns></returns>
+		async Task<string> DoWork(string url, Object model, HttpMethod httpMethod, string token, bool isImage, bool isRefreshedToken, bool isAddOrUpdateContribution = false)
+		{
 
-            MyProfileViewModel.Instance.ErrorMessage = string.Empty;
-            string errorMsg = "";
+			MyProfileViewModel.Instance.ErrorMessage = string.Empty;
+			string errorMsg = "";
 			try
 			{
 				var handler = new HttpClientHandler
@@ -90,12 +90,18 @@ namespace Microsoft.Mvp.Helpers
 						}
 						else if (response.StatusCode == HttpStatusCode.BadRequest)
 						{
-							if (isAddOrUpdateContribution)
+							//sugest to get response content by stream instead of ReadAsStringAsync() becuase the stream has been consumed and Position has been changed
+							var responseStream = await response.Content.ReadAsStreamAsync();
+							var responseBytes = new byte[responseStream.Length];
+							responseStream.Read(responseBytes, 0, (int)responseStream.Length);
+							var responseText = System.Text.UTF8Encoding.UTF8.GetString(responseBytes, 0, responseBytes.Length);
+
+							if (!String.IsNullOrWhiteSpace(responseText))
 							{
-								var responseString = await response.Content.ReadAsStringAsync();
-								if (!string.IsNullOrEmpty(responseString))
+								var dict = JsonConvert.DeserializeObject<Dictionary<String, String>>(responseText);
+								if (dict != null && dict.TryGetValue("Message", out string message))
 								{
-									errorMsg = responseString;
+									errorMsg = message;
 								}
 							}
 							else
@@ -141,152 +147,153 @@ namespace Microsoft.Mvp.Helpers
 			{
 				errorMsg = TranslateServices.GetResourceString(CommonConstants.DefaultNetworkErrorString);
 			}
-			catch (Exception ex) {
+			catch (Exception ex)
+			{
 				errorMsg = TranslateServices.GetResourceString(CommonConstants.DefaultNetworkErrorString);
 			}
 
-            if (!string.IsNullOrEmpty(errorMsg))
-            {
-                MyProfileViewModel.Instance.ErrorMessage = errorMsg;
+			if (!string.IsNullOrEmpty(errorMsg))
+			{
+				MyProfileViewModel.Instance.ErrorMessage = errorMsg;
 				throw new Exception(errorMsg);
-            }
-            return null;
-        }
+			}
+			return null;
+		}
 
 
-        public static bool CheckInternetConnection() => CrossConnectivity.Current.IsConnected;
+		public static bool CheckInternetConnection() => CrossConnectivity.Current.IsConnected;
 
-        public async Task<string> GetPhoto(string token)
-        {
-            string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfGetMvpProfileImage, CommonConstants.BaseUrl), null, HttpMethod.Get, token, false, false);
+		public async Task<string> GetPhoto(string token)
+		{
+			string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfGetMvpProfileImage, CommonConstants.BaseUrl), null, HttpMethod.Get, token, false, false);
 
-            if (!string.IsNullOrEmpty(responseTxt))
-            {
-                responseTxt = responseTxt.Substring(1, responseTxt.Length - 2);
-                return responseTxt;
-            }
-            return "";
-        }
+			if (!string.IsNullOrEmpty(responseTxt))
+			{
+				responseTxt = responseTxt.Substring(1, responseTxt.Length - 2);
+				return responseTxt;
+			}
+			return "";
+		}
 
-        public async Task<ProfileModel> GetProfile(string token)
-        {
-            string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfGetMvpProfile, CommonConstants.BaseUrl), null, HttpMethod.Get, token, false, false);
+		public async Task<ProfileModel> GetProfile(string token)
+		{
+			string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfGetMvpProfile, CommonConstants.BaseUrl), null, HttpMethod.Get, token, false, false);
 
-            if (!string.IsNullOrEmpty(responseTxt))
-            {
-                return JsonConvert.DeserializeObject<ProfileModel>(responseTxt);
-            }
-            return null;
+			if (!string.IsNullOrEmpty(responseTxt))
+			{
+				return JsonConvert.DeserializeObject<ProfileModel>(responseTxt);
+			}
+			return null;
 
-        }
+		}
 
-        public async Task<ContributionTypeDetail> GetContributionTypes(string token)
-        {
-            string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfGetContributionTypes, CommonConstants.BaseUrl), null, HttpMethod.Get, token, false, false);
+		public async Task<ContributionTypeDetail> GetContributionTypes(string token)
+		{
+			string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfGetContributionTypes, CommonConstants.BaseUrl), null, HttpMethod.Get, token, false, false);
 
-            if (!string.IsNullOrEmpty(responseTxt))
-            {
-                ContributionTypeDetail contributionTypeDetail = new ContributionTypeDetail();
-                contributionTypeDetail.ContributionTypes = JsonConvert.DeserializeObject<ObservableRangeCollection<ContributionTypeModel>>(responseTxt);
-                return contributionTypeDetail;
-            }
-            return null;
-
-
-        }
-
-        public async Task<ContributionDetail> GetContributionAreas(string token)
-        {
-            List<ContributionTechnologyModel> contributionModels = new List<ContributionTechnologyModel>();
-
-            string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfGetContributionAreas, CommonConstants.BaseUrl), null, HttpMethod.Get, token, false, false);
-            if (!string.IsNullOrEmpty(responseTxt))
-            {
-                IList<ContributionAreaData> liInfo = JsonConvert.DeserializeObject<IList<ContributionAreaData>>(responseTxt);
-
-                foreach (var liData in liInfo)
-                {
-                    foreach (var contribution in liData.Contributions)
-                    {
-                        foreach (var area in contribution.ContributionArea)
-                        {
-                            contributionModels.Add(area);
-                        }
-                    }
-                }
-
-                ContributionDetail detail = new ContributionDetail();
-                detail.ContributionArea = contributionModels;
-
-                return detail;
-            }
-            return null;
+			if (!string.IsNullOrEmpty(responseTxt))
+			{
+				ContributionTypeDetail contributionTypeDetail = new ContributionTypeDetail();
+				contributionTypeDetail.ContributionTypes = JsonConvert.DeserializeObject<ObservableRangeCollection<ContributionTypeModel>>(responseTxt);
+				return contributionTypeDetail;
+			}
+			return null;
 
 
-        }
+		}
 
-        public async Task<ContributionInfo> GetContributions(int start, int size, string token)
-        {
-            string result = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfGetContributions, CommonConstants.BaseUrl, start, size), null, HttpMethod.Get, token, false, false);
-            if (!string.IsNullOrEmpty(result))
-            {
-                return JsonConvert.DeserializeObject<ContributionInfo>(result);
-            }
-            return null;
+		public async Task<ContributionDetail> GetContributionAreas(string token)
+		{
+			List<ContributionTechnologyModel> contributionModels = new List<ContributionTechnologyModel>();
 
-        }
+			string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfGetContributionAreas, CommonConstants.BaseUrl), null, HttpMethod.Get, token, false, false);
+			if (!string.IsNullOrEmpty(responseTxt))
+			{
+				IList<ContributionAreaData> liInfo = JsonConvert.DeserializeObject<IList<ContributionAreaData>>(responseTxt);
 
-        public async Task<ContributionModel> GetContributionModel(int privateSiteId, string token)
-        {
-            string result = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfGetContributionById, privateSiteId), null, HttpMethod.Get, token, false, false);
+				foreach (var liData in liInfo)
+				{
+					foreach (var contribution in liData.Contributions)
+					{
+						foreach (var area in contribution.ContributionArea)
+						{
+							contributionModels.Add(area);
+						}
+					}
+				}
 
-            if (!string.IsNullOrEmpty(result))
-            {
-                return JsonConvert.DeserializeObject<ContributionModel>(result);
-            }
-            return null;
+				ContributionDetail detail = new ContributionDetail();
+				detail.ContributionArea = contributionModels;
 
-        }
-
-        public async Task<ContributionModel> AddContributionModel(ContributionModel model, string token)
-        {
-            string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfPutContribution, CommonConstants.BaseUrl), model, HttpMethod.Post, token, false, false, true);
-            if (!string.IsNullOrEmpty(responseTxt))
-            {
-                var item = JsonConvert.DeserializeObject<ContributionModel>(responseTxt);
-
-                item.ContributionType.Name = item.ContributionType.Name.Replace("Sample Code", "Code Samples");
-                return item;
-            }
-            return null;
-
-        }
-
-        public async Task<string> EditContributionModel(ContributionModel model, string token)
-        {
-            string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfPostContribution, CommonConstants.BaseUrl), model, HttpMethod.Put, token, false, false, true);
-
-            return responseTxt;
-        }
-
-        public async Task<string> DeleteContributionModel(int privateSiteId, string token)
-        {
-            string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfDeleteContribution, CommonConstants.BaseUrl, privateSiteId), null, HttpMethod.Delete, token, false, false);
-            return responseTxt;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            // Suppress finalization.
-            GC.SuppressFinalize(this);
-
-        }
+				return detail;
+			}
+			return null;
 
 
-        private void Dispose(bool disposing)
-        {
+		}
 
-        }
-    }
+		public async Task<ContributionInfo> GetContributions(int start, int size, string token)
+		{
+			string result = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfGetContributions, CommonConstants.BaseUrl, start, size), null, HttpMethod.Get, token, false, false);
+			if (!string.IsNullOrEmpty(result))
+			{
+				return JsonConvert.DeserializeObject<ContributionInfo>(result);
+			}
+			return null;
+
+		}
+
+		public async Task<ContributionModel> GetContributionModel(int privateSiteId, string token)
+		{
+			string result = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfGetContributionById, privateSiteId), null, HttpMethod.Get, token, false, false);
+
+			if (!string.IsNullOrEmpty(result))
+			{
+				return JsonConvert.DeserializeObject<ContributionModel>(result);
+			}
+			return null;
+
+		}
+
+		public async Task<ContributionModel> AddContributionModel(ContributionModel model, string token)
+		{
+			string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfPutContribution, CommonConstants.BaseUrl), model, HttpMethod.Post, token, false, false, true);
+			if (!string.IsNullOrEmpty(responseTxt))
+			{
+				var item = JsonConvert.DeserializeObject<ContributionModel>(responseTxt);
+
+				item.ContributionType.Name = item.ContributionType.Name.Replace("Sample Code", "Code Samples");
+				return item;
+			}
+			return null;
+
+		}
+
+		public async Task<string> EditContributionModel(ContributionModel model, string token)
+		{
+			string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfPostContribution, CommonConstants.BaseUrl), model, HttpMethod.Put, token, false, false, true);
+
+			return responseTxt;
+		}
+
+		public async Task<string> DeleteContributionModel(int privateSiteId, string token)
+		{
+			string responseTxt = await DoWork(string.Format(System.Globalization.CultureInfo.InvariantCulture, CommonConstants.ApiUrlOfDeleteContribution, CommonConstants.BaseUrl, privateSiteId), null, HttpMethod.Delete, token, false, false);
+			return responseTxt;
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			// Suppress finalization.
+			GC.SuppressFinalize(this);
+
+		}
+
+
+		private void Dispose(bool disposing)
+		{
+
+		}
+	}
 }
