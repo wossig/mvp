@@ -85,7 +85,7 @@ namespace Microsoft.Mvpui
             {
                 App.GoHome();
             }
-            else if(!CrossConnectivity.Current.IsConnected)
+            else if(!await CrossConnectivity.Current.IsReachable("login.live.com"))
 			{
 				await DisplayAlert(TranslateServices.GetResourceString(CommonConstants.DialogTitleForCheckNetwork),
 					TranslateServices.GetResourceString(CommonConstants.DialogDescriptionForCheckNetwork),

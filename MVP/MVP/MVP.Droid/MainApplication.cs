@@ -20,10 +20,9 @@ namespace Microsoft.Mvp.Droid
         {
             base.OnCreate();
             RegisterActivityLifecycleCallbacks(this);
-            Acr.UserDialogs.UserDialogs.Init(() => CrossCurrentActivity.Current.Activity);
-
-            //A great place to initialize Xamarin.Insights and Dependency Services!
-        }
+			Acr.UserDialogs.UserDialogs.Init(this);
+			//A great place to initialize Xamarin.Insights and Dependency Services!
+		}
 
         public override void OnTerminate()
         {
@@ -31,34 +30,34 @@ namespace Microsoft.Mvp.Droid
             UnregisterActivityLifecycleCallbacks(this);
         }
 
-        public void OnActivityCreated(Activity contribution, Bundle savedInstanceState)
+        public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
         {
-            CrossCurrentActivity.Current.Activity = contribution;
+            CrossCurrentActivity.Current.Activity = activity;
         }
 
-        public void OnActivityDestroyed(Activity contribution)
-        {
-        }
-
-        public void OnActivityPaused(Activity contribution)
+        public void OnActivityDestroyed(Activity activity)
         {
         }
 
-        public void OnActivityResumed(Activity contribution)
-        {
-            CrossCurrentActivity.Current.Activity = contribution;
-        }
-
-        public void OnActivitySaveInstanceState(Activity contribution, Bundle outState)
+        public void OnActivityPaused(Activity activity)
         {
         }
 
-        public void OnActivityStarted(Activity contribution)
+        public void OnActivityResumed(Activity activity)
         {
-            CrossCurrentActivity.Current.Activity = contribution;
+            CrossCurrentActivity.Current.Activity = activity;
         }
 
-        public void OnActivityStopped(Activity contribution)
+        public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
+        {
+        }
+
+        public void OnActivityStarted(Activity activity)
+        {
+            CrossCurrentActivity.Current.Activity = activity;
+        }
+
+        public void OnActivityStopped(Activity activity)
         {
         }
     }

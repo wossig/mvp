@@ -89,8 +89,6 @@ namespace Microsoft.Mvpui
 				System.Diagnostics.Debug.WriteLine("found resource: " + res);
 			System.Diagnostics.Debug.WriteLine("====================================");
 #endif
-
-
 			// This lookup NOT required for Windows platforms - the Culture will be automatically set
 			if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android || Device.RuntimePlatform == Device.UWP)
 			{
@@ -99,7 +97,6 @@ namespace Microsoft.Mvpui
 				Microsoft.Mvp.Resources.AppResources.Culture = ci; // set the RESX for resource localization
 				DependencyService.Get<ILocalize>().SetLocale(ci); // set the Thread for locale-aware methods
 			}
-
 			//Microsoft.Mvp.Resources.AppResources.Culture = new System.Globalization.CultureInfo("en");
 
 #if !DEBUG

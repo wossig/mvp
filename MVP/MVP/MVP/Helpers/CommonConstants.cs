@@ -208,7 +208,9 @@ namespace Microsoft.Mvp.Helpers
 
 		public const string ExpectedCultureIdentifier = "ExpectedCultureIdentifier";
 
-		public const string InvalidUrlMessageText= "InvalidUrlMessageText";		public const string FieldMustbeNumberMessageText= "FieldMustbeNumberMessageText";		public const string RequiredFieldMessageText= "RequiredFieldMessageText";
+		public const string InvalidUrlMessageText= "InvalidUrlMessageText";
+		public const string FieldMustbeNumberMessageText= "FieldMustbeNumberMessageText";
+		public const string RequiredFieldMessageText= "RequiredFieldMessageText";
 
 		//TranslateServices.GetResourceString(CommonConstants.)
 
@@ -227,7 +229,7 @@ namespace Microsoft.Mvp.Helpers
 
 		#region RequestHeaders list
 		public const string OcpApimSubscriptionKey = "Ocp-Apim-Subscription-Key";
-		public const string OcpApimSubscriptionValue = "9d69252bb303493ba8ff6c9bcfbf9602";
+		public const string OcpApimSubscriptionValue = "99ea54ff340b4f0d8f737163e83adb56";
 		public const string AuthorizationKey = "Authorization";
 		public const string AcceptsKey = "Accepts";
 		#endregion
@@ -260,8 +262,8 @@ namespace Microsoft.Mvp.Helpers
 #if DEBUG
 		//public const string ClientId = "LIVE_ID"; 
 		//public const string ClientSecret = "LIVE_SECRET"; 
-		public const string ClientId = "00000000400FA908"; //<- this is my (Seiya) client key ==> put yours in here 
-		public const string ClientSecret = "ta3oGLEAGYP74zNin4I9hm7PvtSNRJJZ";  // <- my (Seiya) secret ), put yours in here 
+		public const string ClientId = "8b2db1cb-ab0e-4ff1-8ae3-2cbcb6ec48b7"; //<- this is my (Seiya) client key ==> put yours in here 
+		public const string ClientSecret = "cfdlWRN03[:(oxkGGBV977-";  // <- my (Seiya) secret ), put yours in here  
 #else
 		public const string ClientId = "000000004818061B"; //<- this is (Micah) client key, put yours in here
 		public const string ClientSecret = "XQNsbHbSnd17CNcLYdZcm6i8gz79HA4u";  // <- (Micah) secret ), put yours in here
@@ -272,8 +274,8 @@ namespace Microsoft.Mvp.Helpers
 
 		#endregion
 
-		public const string ApiSourceType = "mvp"; //mvp-dev
-		public const string BaseUrl = "https://mvpapi.azure-api.net/mvp";// "https://mvpapi.azure-api.net/{APISourceType}";
+		public const string ApiSourceType = "mvp-dev"; //mvp-dev
+		public const string BaseUrl = "https://mvpapi.azure-api.net/mvp-dev";// "https://mvpapi.azure-api.net/{APISourceType}";
 		public const string ApiUrlOfDeleteContribution = "{0}/api/contributions?id={1}"; //"https://mvpapi.azure-api.net/mvp/api/contributions?id={0}";
 		public const string ApiUrlOfDeleteOnlineIdentity = "{0}/api/onlineidentities?id={1}"; //"https://mvpapi.azure-api.net/mvp/api/onlineidentities?id={0}";
 		public const string ApiUrlOfGetContributionAreas = "{0}/api/contributions/contributionareas"; //"https://mvpapi.azure-api.net/mvp/api/contributions/contributionareas";
