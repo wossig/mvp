@@ -22,7 +22,7 @@ namespace Microsoft.Mvpui
 
 			ToolbarClose.Command = new Command(async () => await Navigation.PopModalAsync());
 
-			if (Device.RuntimePlatform == Device.UWP || Device.RuntimePlatform == Device.WinPhone)
+			if (Device.RuntimePlatform == Device.UWP)
 				ToolbarClose.Icon = "Assets\\toolbar_close.png";
 
 
@@ -81,11 +81,15 @@ namespace Microsoft.Mvpui
 			}
 
 
-            if (LogOnViewModel.Instance.IsLoggedIn)
-            {
-                App.GoHome();
-            }
-            else if(!await CrossConnectivity.Current.IsReachable("login.live.com"))
+			if (LogOnViewModel.Instance.IsLoggedIn)
+			{
+				App.GoHome();
+			}
+			/*
+			 IsConnected may return false in some region where cann't use google service on Andriod
+			 IsReachable did not work on IOS but working on Android with host login.live.com
+			 */
+			else if (!await CrossConnectivity.Current.IsRemoteReachable(new Uri("https://login.live.com"), TimeSpan.FromSeconds(5)))
 			{
 				await DisplayAlert(TranslateServices.GetResourceString(CommonConstants.DialogTitleForCheckNetwork),
 					TranslateServices.GetResourceString(CommonConstants.DialogDescriptionForCheckNetwork),

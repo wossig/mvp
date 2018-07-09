@@ -26,34 +26,52 @@
 		</On>
 	</OnPlatform>
 	<OnPlatform x:Key="NormalLabelFontSize" x:TypeArguments="x:Double">
-		<On Platform="iOS" Value="13" />
-		<On Platform="Android" Value="14" />
-		<On Platform="UWP" Value="14" />
+		<On Platform="iOS,Android">
+			<x:Double>13</x:Double>
+		</On>
+		<On Platform="UWP">
+			<x:Double>14</x:Double>
+		</On>
 	</OnPlatform>
 	<OnPlatform x:Key="BottomMenuLabelFontSize" x:TypeArguments="x:Double">
-		<On Platform="iOS" Value="10" />
-		<On Platform="Android" Value="12" />
-		<On Platform="UWP" Value="12" />
+		<On Platform="iOS,UWP">
+			<x:Double>12</x:Double>
+		</On>
+		<On Platform="iOS">
+			<x:Double>10</x:Double>
+		</On>
 	</OnPlatform>
 	<OnPlatform x:Key="ContributionBtnFontSize" x:TypeArguments="x:Double">
-		<On Platform="iOS" Value="10" />
-		<On Platform="Android" Value="16" />
-		<On Platform="UWP" Value="16" />
+		<On Platform="Android,UWP">
+			<x:Double>16</x:Double>
+		</On>
+		<On Platform="iOS">
+			<x:Double>10</x:Double>
+		</On>
 	</OnPlatform>
 	<OnPlatform x:Key="CommonProfileLabelFontSize" x:TypeArguments="x:Double">
-		<On Platform="iOS" Value="12" />
-		<On Platform="Android" Value="14" />
-		<On Platform="UWP" Value="14" />
+		<On Platform="Android,UWP">
+			<x:Double>14</x:Double>
+		</On>
+		<On Platform="iOS">
+			<x:Double>12</x:Double>
+		</On>
 	</OnPlatform>
 	<OnPlatform x:Key="SmallProfileLabelFontSize" x:TypeArguments="x:Double" >
-		<On Platform="iOS" Value="10" />
-		<On Platform="Android" Value="14" />
-		<On Platform="UWP" Value="14" />
+		<On Platform="Android,UWP">
+			<x:Double>14</x:Double>
+		</On>
+		<On Platform="iOS">
+			<x:Double>10</x:Double>
+		</On>
 	</OnPlatform>
 	<OnPlatform x:Key="XSmallProfileLabelFontSize" x:TypeArguments="x:Double" >
-		<On Platform="iOS" Value="13" />
-		<On Platform="Android" Value="13" />
-		<On Platform="UWP" Value="13" />
+		<On Platform="Android,UWP">
+			<x:Double>13</x:Double>
+		</On>
+		<On Platform="iOS">
+			<x:Double>13</x:Double>
+		</On>
 	</OnPlatform>
 
 	<Style TargetType="Label">

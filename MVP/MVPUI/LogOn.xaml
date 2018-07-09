@@ -54,8 +54,8 @@
                 Clicked="ButtonSignIn_Clicked"
                 Text="{Binding SigninTo}">
                 <Button.FontFamily>
-                    <OnPlatform x:TypeArguments="x:String">
-                        <OnPlatform.iOS>HelveticaNeue</OnPlatform.iOS>
+					<OnPlatform x:TypeArguments="x:String">
+						<OnPlatform.iOS>HelveticaNeue</OnPlatform.iOS>
                     </OnPlatform>
                 </Button.FontFamily>
             </Button>

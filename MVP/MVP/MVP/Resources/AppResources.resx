@@ -429,7 +429,7 @@ Microsoft MVP award is given to exceptional, independent community leaders who s
     <value>AWARD CATEGORIES</value>
   </data>
   <data name="LabelForContributionArea" xml:space="preserve">
-    <value>Contribution Area</value>
+    <value>Primary contribution area</value>
   </data>
   <data name="LabelForContributionDate" xml:space="preserve">
     <value>Date of contribution</value>
@@ -478,5 +478,14 @@ Microsoft MVP award is given to exceptional, independent community leaders who s
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome</value>
+  </data>
+  <data name="LabelForAdditionalContributionArea" xml:space="preserve">
+    <value>Additional contribution areas</value>
+  </data>
+  <data name="LabelForAdditionalContributionAreaSubDesc" xml:space="preserve">
+    <value>Select up to 2 additional technology areas that may also apply to this activity.</value>
+  </data>
+  <data name="LabelForContributionAreaSubDesc" xml:space="preserve">
+    <value>Select the technology area that is the primary focus of this activity.</value>
   </data>
 </root>

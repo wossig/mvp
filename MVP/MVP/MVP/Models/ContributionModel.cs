@@ -1,16 +1,18 @@
 ﻿using System;
-using System.Reflection;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Microsoft.Mvp.Models
 {
-    public class ContributionModel
+	public class ContributionModel
     {
         public string ContributionId { get; set; }
 
         public ContributionTypeModel ContributionType { get; set; }
 
         public ContributionTechnologyModel ContributionTechnology { get; set; }
+
+		public IList<ContributionTechnologyModel> AdditioanlTechnologies { get; set; }
 
         public DateTime? StartDate { get; set; }
 

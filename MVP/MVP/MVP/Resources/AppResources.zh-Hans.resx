@@ -428,7 +428,7 @@
     <value>获奖类别</value>
   </data>
   <data name="LabelForContributionArea" xml:space="preserve">
-    <value>贡献区域</value>
+    <value>主贡献区域</value>
   </data>
   <data name="LabelForContributionDate" xml:space="preserve">
     <value>贡献日期</value>
@@ -477,5 +477,14 @@
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>欢迎</value>
+  </data>
+  <data name="LabelForAdditionalContributionArea" xml:space="preserve">
+    <value>副区域贡献</value>
+  </data>
+  <data name="LabelForAdditionalContributionAreaSubDesc" xml:space="preserve">
+    <value>至多添加两个副区域贡献</value>
+  </data>
+  <data name="LabelForContributionAreaSubDesc" xml:space="preserve">
+    <value>选择一个区域作为主区域贡献</value>
   </data>
 </root>

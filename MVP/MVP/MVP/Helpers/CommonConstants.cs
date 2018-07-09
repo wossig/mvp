@@ -194,6 +194,10 @@ namespace Microsoft.Mvp.Helpers
 		public const string SaveButton = "SaveButton";
 		public const string LabelForContributionType = "LabelForContributionType";
 		public const string LabelForContributionArea = "LabelForContributionArea";
+		public const string LabelForContributionAreaSubDesc = "LabelForContributionAreaSubDesc";
+		public const string LabelForAdditionalContributionArea = "LabelForAdditionalContributionArea";
+		public const string LabelForAdditionalContributionAreaSubDesc = "LabelForAdditionalContributionAreaSubDesc";
+
 		public const string LabelForContributionDate = "LabelForContributionDate";
 		public const string LabelForContributionTitle = "LabelForContributionTitle";
 		public const string LabelForURL = "LabelForURL";

@@ -756,6 +756,24 @@ namespace Microsoft.Mvp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Additional contribution areas.
+        /// </summary>
+        public static string LabelForAdditionalContributionArea {
+            get {
+                return ResourceManager.GetString("LabelForAdditionalContributionArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select up to 2 additional technology areas that may also apply to this activity..
+        /// </summary>
+        public static string LabelForAdditionalContributionAreaSubDesc {
+            get {
+                return ResourceManager.GetString("LabelForAdditionalContributionAreaSubDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AWARD CATEGORIES.
         /// </summary>
         public static string LabelForAwardCategories {
@@ -765,11 +783,20 @@ namespace Microsoft.Mvp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contribution Area.
+        ///   Looks up a localized string similar to Primary contribution area.
         /// </summary>
         public static string LabelForContributionArea {
             get {
                 return ResourceManager.GetString("LabelForContributionArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the technology area that is the primary focus of this activity..
+        /// </summary>
+        public static string LabelForContributionAreaSubDesc {
+            get {
+                return ResourceManager.GetString("LabelForContributionAreaSubDesc", resourceCulture);
             }
         }
         

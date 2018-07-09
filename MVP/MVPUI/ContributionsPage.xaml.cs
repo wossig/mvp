@@ -21,7 +21,7 @@ namespace Microsoft.Mvpui
 
 			BindingContext = MyProfileViewModel.Instance;
 
-			if (Device.RuntimePlatform == Device.UWP || Device.RuntimePlatform == Device.WinPhone)
+			if (Device.RuntimePlatform == Device.UWP)
 				ToolbarAddContribution.Icon = "Assets\\toolbar_add.png";
 
 
@@ -89,21 +89,24 @@ namespace Microsoft.Mvpui
 
 			MyProfileViewModel.Instance.DeleteCommand.Execute(contribution);
 		}
-		
-		public void OnItemAppearing(object sender, ItemVisibilityEventArgs eventArgs)
+
+		public async void OnItemAppearing(object sender, ItemVisibilityEventArgs eventArgs)
 		{
 			if (MyProfileViewModel.Instance.IsBusy || !MyProfileViewModel.Instance.CanLoadMore)
 				return;
-			
+
 			var viewCellDetails = eventArgs.Item as ContributionModel;
+
 			var viewCellIndex = MyProfileViewModel.Instance.List.IndexOf(viewCellDetails);
-			if (MyProfileViewModel.Instance.List.Count() - 2 <= viewCellIndex)
+			var offset = 2;
+			if (Device.RuntimePlatform == Device.UWP) { offset = 1; }
+			if (MyProfileViewModel.Instance.List.Count() - offset <= viewCellIndex)
 			{
-				MyProfileViewModel.Instance.ExecuteLoadMoreCommand().ContinueWith((results) => { }, TaskScheduler.FromCurrentSynchronizationContext());
+				await MyProfileViewModel.Instance.ExecuteLoadMoreCommand().ContinueWith((results) => { }, TaskScheduler.FromCurrentSynchronizationContext());
 			}
 		}
 
-		
+
 		bool navigating;
 		async void AddContribution_Clicked(object sender, System.EventArgs e)
 		{

@@ -16,9 +16,27 @@
 						<Label Text="{Binding LabelForContributionType}" FontSize="{StaticResource NormalLabelFontSize}" TextColor="{StaticResource SecondaryTextColor}" VerticalTextAlignment="End" />
 						<Picker HeightRequest="40" x:Name="contributionTypeSelector" SelectedIndexChanged="OnContributionTypeSelectedIndexChanged" />
 
-						<Label Text="{Binding LabelForContributionArea}" FontSize="{StaticResource NormalLabelFontSize}"  TextColor="{StaticResource SecondaryTextColor}" VerticalTextAlignment="End" />
+						<ContentView>
+							<StackLayout Spacing="0" Padding="0">
+								<Label Text="{Binding LabelForContributionArea}" FontSize="{StaticResource NormalLabelFontSize}"  TextColor="{StaticResource SecondaryTextColor}" VerticalTextAlignment="End" />
+								<Label Text="{Binding LabelForContributionAreaSubDesc}" FontSize="10"  TextColor="{StaticResource SecondaryTextColor}" VerticalTextAlignment="End" />
+							</StackLayout>
+						</ContentView>
 						<Picker HeightRequest="40"  x:Name="ContributionAreaSelector" TextColor="Black" />
 
+						<Grid x:Name="additonalACGrid">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="85*"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<ContentView Grid.ColumnSpan="2" Grid.Row="0" >
+								<StackLayout Spacing="0" Padding="0">
+									<Label Text="{Binding LabelForAdditionalContributionArea}" FontSize="{StaticResource NormalLabelFontSize}"  TextColor="{StaticResource SecondaryTextColor}" VerticalTextAlignment="End" />
+									<Label Text="{Binding LabelForAdditionalContributionAreaSubDesc}" FontSize="10"  TextColor="{StaticResource SecondaryTextColor}" VerticalTextAlignment="End" />
+								</StackLayout>
+							</ContentView>
+						</Grid>
+						
 						<Label Text="{Binding LabelForContributionDate}" FontSize="{StaticResource NormalLabelFontSize}"  TextColor="{StaticResource SecondaryTextColor}" VerticalTextAlignment="End" />
 						<DatePicker x:Name="ContributionDateSelector" Date="{Binding MyContribution.StartDate}" TextColor="Black" />
 
@@ -61,9 +79,6 @@
 						<Entry x:Name="entryAnnualReach" Keyboard="Numeric" TextColor="Black" Text="{Binding MyContribution.AnnualReach}" />
 
 					</StackLayout>
-
-
-
 				</StackLayout>
 
 			</ScrollView>

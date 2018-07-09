@@ -32,7 +32,7 @@ namespace Microsoft.Mvp.ViewModels
 		private bool _isSecondAnnualQuantityVisible;
 		private string _annualQuantityTipText = TranslateServices.GetResourceString(CommonConstants.AnnualQuantityTipTextDefault);
 		private string _secondAnnualQuantityTipText = string.Empty;
-		private string _annualReachTipText = TranslateServices.GetResourceString(CommonConstants.AnnualReachTipTextDefault);		 
+		private string _annualReachTipText = TranslateServices.GetResourceString(CommonConstants.AnnualReachTipTextDefault);
 
 		private ContributionModel _myContribution;
 		private ContributionModel _myContributionBackup;
@@ -86,11 +86,17 @@ namespace Microsoft.Mvp.ViewModels
 
 		public ObservableRangeCollection<ContributionTechnologyModel> ContributionAreas { get; set; }
 
-		public ObservableRangeCollection<VisibilityModel> PersonGroups { get; set; }		
+		public ObservableRangeCollection<VisibilityModel> PersonGroups { get; set; }
 
 		public string LabelForContributionType { get; } = TranslateServices.GetResourceString(CommonConstants.LabelForContributionType);
 
 		public string LabelForContributionArea { get; } = TranslateServices.GetResourceString(CommonConstants.LabelForContributionArea);
+
+		public string LabelForContributionAreaSubDesc { get; } = TranslateServices.GetResourceString(CommonConstants.LabelForContributionAreaSubDesc);
+
+		public string LabelForAdditionalContributionArea { get; } = TranslateServices.GetResourceString(CommonConstants.LabelForAdditionalContributionArea);
+
+		public string LabelForAdditionalContributionAreaSubDesc { get; } = TranslateServices.GetResourceString(CommonConstants.LabelForAdditionalContributionAreaSubDesc);
 
 		public string LabelForContributionDate { get; } = TranslateServices.GetResourceString(CommonConstants.LabelForContributionDate);
 

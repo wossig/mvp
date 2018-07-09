@@ -404,11 +404,11 @@ namespace Microsoft.Mvp.ViewModels
 
 				CanLoadMore = contributions.Contributions.Count == 20;
 
-                progress?.Hide();
+				progress?.Hide();
 			}
 			catch (Exception ex)
 			{
-                progress?.Hide();
+				progress?.Hide();
 				await UserDialogs.Instance.AlertAsync(string.Format(TranslateServices.GetResourceString(CommonConstants.DialogDescriptionForCheckNetworkFormat1), ex.Message), TranslateServices.GetResourceString(CommonConstants.DialogOK));
 			}
 		}

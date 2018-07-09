@@ -91,10 +91,10 @@ namespace Microsoft.Mvpui
 			}
 			catch (Exception exp)
 			{
-				UserDialogs.Instance.Alert(exp.Message);
 				App.CookieHelper.ClearCookie();
 				LiveIdLogOnViewModel.Instance.SignOut();
 				await Navigation.PushModalAsync(new LogOn());
+				UserDialogs.Instance.Alert(exp.Message);
 			}
 
 		}
